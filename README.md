@@ -123,7 +123,7 @@ Estimated exposure by metal group (variance priced at median purchase cost):
 | Brass | -7.4 | -$36K |
 | **Total** | **-1,044.0** | **-$623K** |
 
-Ferrous accounts for 86% of the unresolved tons but 44% of the estimated dollars, while copper carries about as much value in 33 tons.
+Ferrous accounts for 86% of the unresolved tons but 44% of the estimated dollars, while copper carries about two-thirds of the ferrous value in just 33 tons.
 
 ![Reconciliation summary by metal group](images/recon_by_metal.png)
 
