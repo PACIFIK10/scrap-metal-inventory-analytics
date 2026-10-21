@@ -1,0 +1,41 @@
+grade_id,grade_name,metal_group,standard_load_tons,processing_cost_per_ton
+CU-01,Bare Bright Copper,COPPER,20,60
+CU-02,#1 Copper,COPPER,20,60
+CU-03,#2 Copper,COPPER,20,60
+CU-04,Insulated Copper Wire,COPPER,20,60
+CU-05,Copper Turnings,COPPER,20,60
+CU-06,Copper Transformers,COPPER,20,60
+CU-07,Copper Motors,COPPER,20,60
+AL-01,6063 Extrusions,ALUMINUM,20,35
+AL-02,6061 Extrusions,ALUMINUM,20,35
+AL-03,Clean Aluminum Sheet,ALUMINUM,20,35
+AL-04,Cast Aluminum,ALUMINUM,20,35
+AL-05,Aluminum Wheels,ALUMINUM,20,35
+AL-06,Used Beverage Cans,ALUMINUM,20,35
+AL-07,Clean Aluminum Turnings,ALUMINUM,20,35
+AL-08,Aluminum Siding,ALUMINUM,20,35
+AL-09,Painted Aluminum Sheet,ALUMINUM,20,35
+BR-01,Yellow Brass,BRASS,22,45
+BR-02,Red Brass,BRASS,22,45
+BR-03,Brass Turnings,BRASS,22,45
+BR-04,Brass Shells,BRASS,22,45
+BR-05,Brass Radiators,BRASS,22,45
+BR-06,Heavy Brass,BRASS,22,45
+BR-07,Bronze,BRASS,22,45
+SS-01,304 Stainless Solids,STAINLESS,22,40
+SS-02,304 Stainless Turnings,STAINLESS,22,40
+SS-03,316 Stainless Solids,STAINLESS,22,40
+SS-04,316 Stainless Turnings,STAINLESS,22,40
+SS-05,430 Stainless Solids,STAINLESS,22,40
+SS-06,18-8 Stainless Sheet,STAINLESS,22,40
+SS-07,Stainless Sinks,STAINLESS,22,40
+SS-08,Mixed Stainless,STAINLESS,22,40
+FE-01,HMS 1,FERROUS,24,18
+FE-02,HMS 2,FERROUS,24,18
+FE-03,HMS 1&2 80/20,FERROUS,24,18
+FE-04,Shredded Steel,FERROUS,24,18
+FE-05,Busheling,FERROUS,24,18
+FE-06,Plate & Structural,FERROUS,24,18
+FE-07,Cast Iron,FERROUS,24,18
+FE-08,Steel Turnings,FERROUS,24,18
+FE-09,#1 Bundles,FERROUS,24,18

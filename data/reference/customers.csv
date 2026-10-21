@@ -1,0 +1,13 @@
+customer_id,customer_name,customer_type,metal_groups_bought,region,freight_per_ton
+C01,Copper Rod Mill A,Mill,COPPER,PA,38
+C02,Copper & Brass Ingot Maker,Smelter,COPPER;BRASS,OH,62
+C03,Brass Foundry A,Foundry,BRASS,NJ,22
+C04,Aluminum Billet Mill A,Mill,ALUMINUM,PA,40
+C05,Aluminum Smelter B,Smelter,ALUMINUM,NY,55
+C06,Aluminum Can Sheet Mill,Mill,ALUMINUM,OH,65
+C07,Stainless Melt Shop A,Mill,STAINLESS,PA,45
+C08,Export Trader (Non-Ferrous),Export Trader,COPPER;ALUMINUM;STAINLESS;BRASS,NJ,18
+C09,Steel Mini-Mill A,Mill,FERROUS,DE,14
+C10,Steel Mini-Mill B,Mill,FERROUS,PA,20
+C11,Cast Iron Foundry,Foundry,FERROUS,MD,18
+C12,Export Broker (Bulk Ferrous),Export Trader,FERROUS,NJ,12

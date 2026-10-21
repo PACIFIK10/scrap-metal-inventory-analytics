@@ -1,0 +1,9 @@
+yard_id,yard_name,city,state,capacity_tons
+CAM,Camden Main Yard,Camden,NJ,20900
+PHL,Philadelphia Yard,Philadelphia,PA,14900
+TRE,Trenton Yard,Trenton,NJ,7000
+NWK,Newark Yard,Newark,NJ,10100
+WIL,Wilmington Yard,Wilmington,DE,5800
+ALL,Allentown Yard,Allentown,PA,6500
+BAL,Baltimore Yard,Baltimore,MD,15100
+REA,Reading Yard,Reading,PA,4700

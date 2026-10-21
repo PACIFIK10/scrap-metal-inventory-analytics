@@ -1,0 +1,18 @@
+scenario,yard_id,grade_id,description
+STRUCTURALLY_SLOW_COMBO,CAM,AL-03,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,CAM,BR-03,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,CAM,BR-06,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,CAM,SS-06,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,PHL,AL-01,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,TRE,SS-03,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,WIL,AL-09,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,WIL,BR-04,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,ALL,AL-05,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,ALL,AL-06,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,ALL,SS-04,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,BAL,AL-02,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,BAL,BR-07,ships rarely for the entire window; builds aged inventory
+STRUCTURALLY_SLOW_COMBO,REA,AL-05,ships rarely for the entire window; builds aged inventory
+DEMAND_SLOWDOWN_ALL_YARDS,ALL,AL-09,outbound shipments slow materially from 2026-01-01
+DEMAND_SLOWDOWN_ALL_YARDS,ALL,CU-06,outbound shipments slow materially from 2026-02-01
+DEMAND_SLOWDOWN_ALL_YARDS,ALL,SS-05,outbound shipments slow materially from 2026-03-01
