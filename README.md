@@ -90,6 +90,10 @@ Tracks operational KPIs across the network: turnover ratios, days-on-hand, carry
 | Volume | About 100,000 purchase receipts and 100,000 outbound loads |
 | Unit | Short tons; prices in USD per short ton |
 
+<img width="515" height="728" alt="recon_exceptions" src="https://github.com/user-attachments/assets/fa6dcc7e-bb38-4c7d-b052-046bb4173a6a" />
+<img width="726" height="226" alt="recon_by_metal" src="https://github.com/user-attachments/assets/a75e9d2c-2f7c-4237-9c2c-9945313c8f14" />
+
+
 ## Architecture
 
 ```
