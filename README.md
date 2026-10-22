@@ -2,17 +2,81 @@
 
 ## Project description
 
-This project analyzes inventory for a fictional regional scrap-metal recycling network: eight yards in the NJ / PA / DE / MD corridor buying scrap from suppliers, sorting it into grades, and selling it to mills, foundries and export traders.
+A portfolio of inventory analytics workbooks for a fictional regional scrap-metal recycling network: eight yards in the NJ / PA / DE / MD corridor buying scrap from suppliers, sorting it into grades, and selling it to mills, foundries and export traders.
 
-The goal is to answer the questions a commercial planning and inventory analyst is asked every week:
+The project answers the questions a commercial planning and inventory analyst faces every week:
 
 - How much material is on hand, by yard and grade, and what is it worth at today's market?
 - Which inventory is aging, slow-moving or otherwise at risk?
-- Where is the inventory sitting relative to yard capacity?
-- Which material should Sales prioritize, and where should Logistics move it first?
+- Where is inventory sitting relative to yard capacity and target stock levels?
+- Which grades should Sales prioritize, and where should Logistics move material first?
+- How should grades be classified for differentiated inventory management?
 - Are the underlying transaction records trustworthy, and do they agree with the inventory system?
 
-The analysis is delivered as an Excel workbook built on Power Query, with a Python script that generates the simulated dataset.
+All analysis is delivered as Excel workbooks, with Python build scripts that generate each workbook programmatically from the shared dataset.
+
+## Workbooks
+
+### 1. Inventory Positioning & Movement Plan
+
+`workbook/inventory_positioning.xlsx` | built by `scripts/build_positioning.py`
+
+Calculates target stock levels for every yard-grade position using safety factors derived from ABC-XYZ classification and recent demand. Identifies overstocked, understocked and critically low positions, then generates an inter-yard rebalance plan to move excess material where it is needed.
+
+| Sheet | Purpose |
+|---|---|
+| README | Dashboard with KPI cards: total positions, critically low count, rebalance tonnage |
+| Positioning_Summary | Target vs. on-hand tons, gap analysis, position status for all 254 yard-grade pairs |
+| Rebalance_Plan | Proposed inter-yard transfers ranked by priority (grade, from-yard, to-yard, tons) |
+| Demand_Analysis | 6-month and 24-month demand trends, growth classification per grade |
+| Yard_Capacity | Utilization, headroom, throughput, net flow and aging metrics per yard |
+| Grade_Strategy | Combined ABC-XYZ + trend + aging recommendations for each grade |
+
+### 2. ABC/XYZ Classification & Price Volatility
+
+`workbook/abc_xyz_classification.xlsx` | built by `scripts/build_abc_xyz.py`
+
+Classifies 40 grades on two dimensions: ABC by revenue contribution (A = top 80%, B = next 15%, C = bottom 5%) and XYZ by demand variability using coefficient of variation (X &le; 0.5, Y &le; 1.0, Z > 1.0). Combines them into a 9-cell matrix with tailored inventory management strategies. Adds price-volatility analysis with 30/90-day buy and sell price trends.
+
+| Sheet | Purpose |
+|---|---|
+| README | Overview and methodology |
+| ABC_Analysis | Grades ranked by cumulative revenue share with A/B/C classification |
+| XYZ_Analysis | Grades ranked by demand variability (coefficient of variation) |
+| ABC_XYZ_Matrix | Combined classification with strategy recommendations per cell |
+| Price_Volatility | Monthly average buy/sell prices, trends and volatility ranking per grade |
+| Strategy_Summary | Actionable strategies mapped to each ABC-XYZ combination |
+
+### 3. Data Quality & Reconciliation
+
+`workbook/inventory_analysis.xlsx`
+
+Reconciles the transaction ledger against month-end system snapshots for all 254 yard-grade pairs across 24 months. Flags data-quality issues (duplicate rows, unit-of-measure errors, price outliers, missing customers) and classifies every variance by root cause.
+
+| Sheet | Purpose |
+|---|---|
+| DQ_Summary, DQ_Price_Check | Counts of each data-quality flag |
+| Recon_Summary | Variance events by cause: count, tons and estimated value |
+| Recon_By_Metal | Unresolved variance by metal group |
+| Recon_Exceptions | Ranked list of all variance movements |
+| Recon_Findings | Written findings and recommendations |
+| inventory_month_end | System balances with reconciliation columns added |
+| ledger_monthly, opening_balance | Monthly ledger movements and starting balance |
+
+### 4. KPI & Aging Analysis
+
+`workbook/inventory_kpi_aging.xlsx` | built by `scripts/build_kpi_workbook.py`
+
+Tracks operational KPIs across the network: turnover ratios, days-on-hand, carrying costs, throughput velocity and capacity utilization. Breaks down aging exposure by bucket (0-30, 31-60, 61-90, 90+ days) at the yard and grade level.
+
+| Sheet | Purpose |
+|---|---|
+| README | Executive summary with network-wide KPIs |
+| Turnover_Analysis | Inventory turnover ratio and days-on-hand by yard and grade |
+| Aging_Summary | Aging distribution by bucket, ranked by exposure |
+| Yard_Performance | Throughput, utilization, carrying cost and net flow per yard |
+| Grade_Performance | Revenue, margin, velocity and aging risk per grade |
+| Monthly_Trends | 24-month time series of key metrics across the network |
 
 ## Scope of the business simulated
 
@@ -44,18 +108,17 @@ The analysis is delivered as an Excel workbook built on Power Query, with a Pyth
       |                    |                     |
       +--------------------+---------------------+
                            |
-                           v
-              Power Query (Excel)
-              cleaning, standardization, data-quality flags
-                           |
-                           v
-              Reconciliation model
-              ledger balance vs. system balance, by yard,
-              grade and month-end; variance classification
-                           |
-                           v
-              Findings and exceptions
-              summary tables, ranked exceptions, written findings
+           +---------------+---------------+
+           |               |               |
+           v               v               v
+   scripts/build_*    Power Query      Python analytics
+   (openpyxl)         (inventory_      (classification,
+                       analysis.xlsx)   positioning, KPIs)
+           |               |               |
+           v               v               v
+      workbook/        workbook/        workbook/
+   positioning,     inventory_       abc_xyz, kpi_aging
+   abc_xyz, kpi     analysis
 ```
 
 ### Data layers
@@ -65,8 +128,6 @@ The analysis is delivered as an Excel workbook built on Power Query, with a Pyth
 **Raw.** Extracts as an operational system would deliver them: the transaction ledger (receipts, shipments, physical-count adjustments), daily market benchmarks per metal group, and daily buy and sell prices per grade. The raw ledger contains the kinds of quality problems found in real extracts: inconsistent code formatting, duplicate rows, unit-of-measure and decimal errors, backdated shipments, missing records, and blank customers.
 
 **System snapshots.** Balances as the inventory system reports them: month-end tons, average cost, book value and market value by yard and grade, split into age buckets (0-30, 31-60, 61-90, 90+ days); lots still open at the end of the period; and the opening balance.
-
-**Validation.** A record of every planted data problem and every built-in business scenario, used to confirm the reconciliation logic finds what it should.
 
 ### Data model
 
@@ -84,63 +145,12 @@ The analysis is delivered as an Excel workbook built on Power Query, with a Pyth
 
 ### Simulation logic
 
-- **Prices.** Each metal group follows a mean-reverting price path with its own volatility, correlated to a shared market factor. Brass tracks copper. Grade prices are a fixed percentage of the group benchmark, and each grade carries its own buy-to-sell spread. Market levels are illustrative, not quotations.
+- **Prices.** Each metal group follows a mean-reverting price path with its own volatility, correlated to a shared market factor. Brass tracks copper. Grade prices are a fixed percentage of the group benchmark, and each grade carries its own buy-to-sell spread.
 - **Inbound material.** Daily purchases per yard and grade respond to season, weekday and recent price level.
 - **Outbound shipments.** Full loads ship when a yard's stock exceeds a days-of-supply target. The target loosens or tightens with 30-day price momentum, so yards hold more when prices are rising. Small piles ship as consolidated partial loads once they age.
 - **Inventory accounting.** First-in, first-out lots, so aging, average cost and valuation are exact.
 - **Built-in business scenarios.** Some yard-grade combinations ship rarely, and a few grades lose demand partway through the period, producing the aged and slow-moving inventory an analyst would be asked to find.
 - **Capacity.** Yard capacity is sized so busy yards run close to, and occasionally over, capacity.
-
-## Analysis workflow
-
-1. **Load and clean (Power Query).** Trim and standardize grade and yard codes, remove duplicate transactions, and convert data types.
-2. **Data-quality flags.** Each transaction is labelled rather than deleted: missing customer on a shipment, non-positive weight, weight likely entered in pounds, and price outlier against the grade's median price.
-3. **Monthly ledger.** Transactions are signed (shipments negative), corrected for pound entries, and summed by yard, grade and month-end.
-4. **Reconciliation.** For every yard, grade and month-end, the ledger balance (opening balance plus cumulative movements) is compared with the inventory system's reported balance.
-5. **Variance classification.** Each change in variance is classified as a missing receipt, a receipt recorded with a bad weight, a shipment recorded with an earlier date than it occurred (temporary, later reversed), or the reversal of an earlier gap.
-6. **Valuation and prioritization.** Variances are priced at median purchase cost and summarized by metal group, so exposure can be ranked by dollars as well as tons.
-
-## Results summary
-
-The reconciliation covered 6,096 month-end balances (254 yard-grade pairs over 24 months). 532 balances disagreed with the system, tracing to 95 monthly movements across 60 yard-grade pairs.
-
-| Cause | Movements | Tons |
-|---|---|---|
-| Missing receipts | 30 | -811.3 |
-| Receipts recorded with zero or negative weight | 12 | -232.7 |
-| Shipments dated earlier than they occurred (temporary) | 27 | -587.1 |
-| Reversal of those earlier gaps | 26 | +587.1 |
-| **Net unresolved at 9/30/2026** | | **-1,044.0** |
-
-Estimated exposure by metal group (variance priced at median purchase cost):
-
-| Metal | Tons | Est. value |
-|---|---|---|
-| Ferrous | -895.7 | -$272K |
-| Copper | -33.4 | -$177K |
-| Aluminum | -58.0 | -$95K |
-| Stainless | -49.5 | -$43K |
-| Brass | -7.4 | -$36K |
-| **Total** | **-1,044.0** | **-$623K** |
-
-Ferrous accounts for 86% of the unresolved tons but 44% of the estimated dollars, while copper carries about two-thirds of the ferrous value in just 33 tons.
-
-![Reconciliation summary by metal group](images/recon_by_metal.png)
-
-![Largest reconciliation exceptions](images/recon_exceptions.png)
-
-## Workbook contents
-
-| Sheet | Purpose |
-|---|---|
-| `DQ_Summary`, `DQ_Price_Check` | Counts of each data-quality flag |
-| `Recon_Summary` | Variance events by cause: count, tons and estimated value |
-| `Recon_By_Metal` | Unresolved variance by metal group |
-| `Recon_Exceptions` | Ranked list of all variance movements |
-| `Recon_Findings` | Written findings and recommendations |
-| `inventory_month_end` | System balances with the reconciliation columns added |
-| `ledger_monthly`, `opening_balance` | Monthly ledger movements and the starting balance |
-| `transactions`, `transactions_flagged`, `grade_medians` | Cleaned transactions, their quality flags, and median prices |
 
 ## Repository layout
 
@@ -148,8 +158,15 @@ Ferrous accounts for 86% of the unresolved tons but 44% of the estimated dollars
 .
 |-- README.md
 |-- generate_data.py
+|-- scripts/
+|   |-- build_positioning.py
+|   |-- build_abc_xyz.py
+|   `-- build_kpi_workbook.py
 |-- workbook/
-|   `-- inventory_analysis.xlsx
+|   |-- inventory_positioning.xlsx
+|   |-- abc_xyz_classification.xlsx
+|   |-- inventory_analysis.xlsx
+|   `-- inventory_kpi_aging.xlsx
 |-- images/
 `-- data/
     |-- reference/
